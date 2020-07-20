@@ -43,8 +43,8 @@ namespace ChatServer.API
 
             services.AddDistributedRedisCache(option =>
             {
-                option.Configuration = "127.0.0.1";
-                option.InstanceName = "master";
+                option.Configuration = Configuration.GetSection("RedisSetting:Host").Value;
+                option.InstanceName = Configuration.GetSection("RedisSetting:User").Value;
             });
 
             var appSettingsSection = Configuration.GetSection("AppSettings");

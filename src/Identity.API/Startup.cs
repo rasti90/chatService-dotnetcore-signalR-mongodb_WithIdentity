@@ -42,7 +42,7 @@ namespace Identity.API
             services.AddTransient<ICustomTokenRequestValidator, DefaultClientTokenClaims>();
 
             var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
-            const string connectionString = @"Host=127.0.0.1;Database=ChatServerIdentityDb;Username=postgres;Password=1234567890";
+            string connectionString = Configuration.GetConnectionString("IdentityDb");
 
             services.AddIdentityServer()
                 .AddDeveloperSigningCredential()
