@@ -10,8 +10,6 @@ namespace ChatServer.API.Repository.Contract {
         Task<User> GetAsync (string appId, string userId);
         User GetByExternalId (string appId, string externalId);
         Task<User> GetByExternalIdAsync (string appId, string externalId);
-        User GetByExternalId(string externalId);
-        Task<User> GetByExternalIdAsync(string externalId);
         User GetByConnectionId (string connectionId);
         Task<User> GetByConnectionIdAsync (string connectionId);
         Task<Connection> GetUserConnectionAsync (string userId, string connectionId);

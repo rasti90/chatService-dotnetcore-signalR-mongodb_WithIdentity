@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.CompilerServices;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using ChatServer.API.Helper;
@@ -16,10 +17,12 @@ namespace ChatServer.API.Hub {
         private readonly IHubService _hubService;
         private readonly IDistributedCache _distributedCache;
         private readonly IUserRepository _userRepository;
-        public ChatHub (IHubService hubservice, IDistributedCache distributedCache, IUserRepository userRepository) {
+        private readonly IApplicationRepository _applicationRepository;
+        public ChatHub (IHubService hubservice, IDistributedCache distributedCache, IUserRepository userRepository, IApplicationRepository applicationRepository) {
             this._hubService = hubservice;
             this._distributedCache = distributedCache;
             this._userRepository = userRepository;
+            this._applicationRepository = applicationRepository;
         }
 
         public async Task SendMessage (string user, string message) {
@@ -71,8 +74,10 @@ namespace ChatServer.API.Hub {
             try {
                 var user = Context.User as ClaimsPrincipal;
                 var userExternalId= user.GetClaimValue("client_userExternalId");
+                var APIKey= user.GetClaimValue("client_APIKey");
 
-                var userInfo = await _userRepository.GetByExternalIdAsync(userExternalId);
+                var appInfo = await _applicationRepository.GetByAPIKeyAsync(APIKey);
+                var userInfo = await _userRepository.GetByExternalIdAsync(appInfo.Id, userExternalId);
                 await _distributedCache.SetObjectAsync(Context.ConnectionId, userInfo);
 
                 var httpContext = Context.GetHttpContext();

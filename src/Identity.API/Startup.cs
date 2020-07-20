@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System;
 using System.Linq;
 using System.Reflection;
 
@@ -27,15 +28,6 @@ namespace Identity.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-
-            //services.AddAuthentication()
-            //.AddGoogle("Google", options =>
-            //{
-            //    options.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
-
-            //    options.ClientId = "API key 1";
-            //    options.ClientSecret = "AIzaSyBa0mtIXjhLaeLmaHHQTDsW2ebP_uNEWLE";
-            //});
 
             services.AddCors(options => {
                 options.AddPolicy(MyCustomAllowedOrigins,

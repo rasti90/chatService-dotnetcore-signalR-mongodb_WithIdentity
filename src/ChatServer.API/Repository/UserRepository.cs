@@ -79,34 +79,6 @@ namespace ChatServer.API.Repository {
             }
         }
 
-        public User GetByExternalId(string externalId)
-        {
-            try
-            {
-                return _users.Find<User>(user => user.ExternalId == externalId).Project<User>(Builders<User>.Projection
-                    .Exclude("Activities").Exclude("Connections")).FirstOrDefault();
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "GetByExternalId UserRepository Exception");
-                return null;
-            }
-        }
-
-        public async Task<User> GetByExternalIdAsync(string externalId)
-        {
-            try
-            {
-                return await _users.Find<User>(user => user.ExternalId == externalId).Project<User>(Builders<User>.Projection
-                    .Exclude("Activities").Exclude("Connections")).FirstOrDefaultAsync();
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "GetByExternalIdAsync UserRepository Exception");
-                return null;
-            }
-        }
-
         public User GetByConnectionId (string connectionId) {
             try {
                 return _users.Find<User> (user => user.Connections.Any (connection => connection.ConnectionId == connectionId)).Project<User> (Builders<User>.Projection

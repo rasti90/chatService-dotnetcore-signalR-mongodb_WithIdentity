@@ -42,6 +42,7 @@ namespace Identity.API
                 ClientSecrets =
                 {
                     new Secret("D369EE97CDC040C99D5E2C1998E44B9F".Sha256())
+                    //new Secret("D369EE97CDC040C99D5E2C1998E75Y3E".Sha256())
                 },
 
                 // scopes that client has access to
